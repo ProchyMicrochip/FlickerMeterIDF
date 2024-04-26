@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"name": "FlickerMeterIDF",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"deque": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"*.tcc": "cpp",
+			"twi.h": "c",
+			"freertos.h": "c",
+			"i2c.h": "c",
+			"pins.h": "c",
+			"i2c_master.h": "c",
+			"esp_log.h": "c"
+		}
+	}
+}
