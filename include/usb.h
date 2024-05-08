@@ -15,6 +15,7 @@
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
+    #include "esp_system.h"
     //const i2c_master_event_callbacks_t callbacks;
     void usb_init();
     //bool IRAM_ATTR onTwiRecieve(i2c_master_dev_handle_t i2c_dev, const i2c_master_event_data_t *evt_data, void *arg);

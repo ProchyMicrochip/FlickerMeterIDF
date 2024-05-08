@@ -10,6 +10,7 @@
     #include "soc/rtc_cntl_reg.h"
     #include <driver/i2c_master.h>
     #include "pins.h"
+    #include "esp_timer.h"
     //i2c_master_bus_handle_t bus_handle;
     void twi_init();
     esp_err_t twi_selftest();

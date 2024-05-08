@@ -21,14 +21,14 @@ void twi_init(void)
         .sda_io_num = FLICKERMETER_SDA,
         .glitch_ignore_cnt = 7,
         .flags.enable_internal_pullup = true,
-        .trans_queue_depth = 10};
+        .trans_queue_depth = 0};
     ESP_ERROR_CHECK(i2c_new_master_bus(&cfg, &bus_handle));
     ESP_LOGI(TAG, "Master inicialized");
     ESP_LOGI(TAG, "AS73211 device init");
     i2c_device_config_t dev_cfg = {
         .dev_addr_length = I2C_ADDR_BIT_LEN_7,
         .device_address = AS73211_ADDRESS,
-        .scl_speed_hz = 800000,
+        .scl_speed_hz = 400000,
     };
     // i2c_master_dev_handle_t dev_handle;
     ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &dev_cfg, &dev_handle));
@@ -54,7 +54,10 @@ void twi_time(uint8_t time)
 void twi_gain(uint8_t gain)
 {
     twi_writeReg(OSR,0x02);
-    gnTmReg = (gnTmReg & 0x0F) | (gain & 0xF0);
+    uint8_t gainShifted = gain << 4;
+    ESP_LOGI("I2C","shifted gain value: %#02x", gainShifted);
+    gnTmReg = (gnTmReg & 0x0F) | (gainShifted & 0xF0);
+    ESP_LOGI("I2C","gnTmReg %#02x", gnTmReg);
     twi_writeReg(CREG1, gnTmReg);
     twi_writeReg(OSR,0x03);
 }
@@ -77,7 +80,7 @@ esp_err_t twi_writeReg(uint8_t reg, uint8_t val)
 {
     buff[0] = reg;
     buff[1] = val;
-    return i2c_master_transmit(dev_handle, buff, 2, 100);
+    return i2c_master_transmit(dev_handle, buff, 2, -1);
 }
 void twi_register_callback(const i2c_master_event_callbacks_t *callback)
 {
